@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Allergen;
 use App\Entity\Diet;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
@@ -28,22 +27,13 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 50; $i++) {
             $ingredient = new Ingredient();
             $ingredient->setName($this->faker->word())
-                       ->setAllergen(mt_rand(0, 1) == 1 ? true : false);
+                ->setIsAllergen(mt_rand(0, 1) == 1 ? true : false);
 
             $ingredients[] = $ingredient;
             $manager->persist($ingredient);
 
         }
     
-        // Allergens
-        $allergens = [];
-        for ($m = 0; $m < 20; $m++) {
-            $allergen = new Allergen();
-            $allergen->setName($this->faker->word());
-
-            $allergens[] = $allergen;
-            $manager->persist($allergen);
-        }
 
         //Diets
         $diets = [];
@@ -64,16 +54,12 @@ class AppFixtures extends Fixture
                 ->setPauseTime(mt_rand(1, 1440))
                 ->setCookingTime(mt_rand(1, 1440));
                     
-        for ($k = 0; $k<mt_rand(5, 15); $k++) {
-            $recipe->addIngredient($ingredients[mt_rand(0, count($ingredients) - 1)]);
-                
-        }
+        for ($k = 0; $k < mt_rand(5, 15); $k++) {
+                $recipe->addIngredient($ingredients[mt_rand(0, count($ingredients) - 1)]);
+            }
+
             $recipe->setSteps($this->faker->text(300));
 
-        for ($h = 0; $h<mt_rand(0, 5); $h++) {
-            $recipe->addAllergen($allergens[mt_rand(0, count($allergens) - 1)]);
-                
-        }
 
         for ($g = 0; $g<mt_rand(0, 5); $g++) {
             $recipe->addDiet($diets[mt_rand(0, count($diets) - 1)]);

@@ -16,6 +16,7 @@ class RecipeController extends AbstractController
     * This function display all recipes
     *
     * @param RecipeRepository $repository
+    * @param Request $request
     * @return Response
     */
 

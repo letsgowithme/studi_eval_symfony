@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+// use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -19,7 +19,7 @@ class Recipe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[UniqueEntity('name')]
+    // #[UniqueEntity('name')]
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
     #[Assert\Length(min: 2, max: 50)]
@@ -50,8 +50,6 @@ class Recipe
     #[ORM\Column(type: Types::TEXT)]
     private ?string $steps = null;
 
-    // #[ORM\ManyToMany(targetEntity: Allergen::class)]
-    // private Collection $allergens;
 
     #[ORM\ManyToMany(targetEntity: Diet::class)]
     private Collection $diets;
@@ -59,7 +57,7 @@ class Recipe
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
-        // $this->allergens = new ArrayCollection();
+        
         $this->diets = new ArrayCollection();
     }
 
@@ -131,6 +129,8 @@ class Recipe
     /**
      * @return Collection<int, Ingredient>
      */
+      
+    
     public function getIngredients(): Collection
     {
         return $this->ingredients;
@@ -164,29 +164,7 @@ class Recipe
         return $this;
     }
  
-     // @return Collection<int, Allergen> /** */
      
-   
-    // public function getAllergens(): Collection
-    // {
-    //     return $this->allergens;
-    // }
-
-    // public function addAllergen(Allergen $allergen): self
-    // {
-    //     if (!$this->allergens->contains($allergen)) {
-    //         $this->allergens->add($allergen);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeAllergen(Allergen $allergen): self
-    // {
-    //     $this->allergens->removeElement($allergen);
-
-    //     return $this;
-    // }
  /**
   * @return Collection<int, Diet>
   */
@@ -211,4 +189,8 @@ class Recipe
 
         return $this;
     }
+    public function __toString() {
+        return $this->name;
+        }
+        
 }

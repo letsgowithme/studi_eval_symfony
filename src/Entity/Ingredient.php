@@ -3,11 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\IngredientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
@@ -17,19 +13,11 @@ class Ingredient
     #[ORM\Column]
     private ?int $id = null;
 
-    #[UniqueEntity('name')]
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Allergen::class)]
-    private Collection $allergens;
-
-    public function __construct()
-    {
-        $this->allergens = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?bool $isAllergen = null;
 
     public function getId(): ?int
     {
@@ -48,27 +36,19 @@ class Ingredient
         return $this;
     }
 
-    /**
-     * @return Collection<int, Allergen>
-     */
-    public function getAllergens(): Collection
+    public function isAllergen(): ?bool
     {
-        return $this->allergens;
+        return $this->isAllergen;
     }
 
-    public function addAllergen(Allergen $allergen): self
+    public function setIsAllergen(bool $isAllergen): self
     {
-        if (!$this->allergens->contains($allergen)) {
-            $this->allergens->add($allergen);
+        $this->isAllergen = $isAllergen;
+
+        return $this;
+    }
+    public function __toString() {
+        return $this->name;
         }
-
-        return $this;
-    }
-
-    public function removeAllergen(Allergen $allergen): self
-    {
-        $this->allergens->removeElement($allergen);
-
-        return $this;
-    }
+        
 }

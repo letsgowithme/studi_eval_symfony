@@ -28,7 +28,7 @@
             <tr class="table-primary">
                 <th scope="row">{{ ingredient.id }}</th>
                 <td>{{ ingredient.name }}</td>
-                <td>{{ ingredient.allergen }}</td>
+                <td>{{ ingredient.isAllergen }}</td>
                 <td><a href="{{ path('ingredient.edit', {id: ingredient.id}) }}" class="btn btn-danger">Modifier</a></td>
                 <td><a href="{{ path('ingredient.delete', {id: ingredient.id}) }}" class="btn btn-warning">Supprimer</a>
                 </td>
