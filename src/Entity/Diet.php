@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AllergenRepository;
+use App\Repository\DietRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: AllergenRepository::class)]
-class Allergen
+#[ORM\Entity(repositoryClass: DietRepository::class)]
+class Diet
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
