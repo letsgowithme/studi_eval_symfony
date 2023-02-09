@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueEntity('name')]
 #[ORM\Entity(repositoryClass: DietRepository::class)]
 class Diet
 {
@@ -15,7 +16,7 @@ class Diet
     #[ORM\Column]
     private ?int $id = null;
 
-    #[UniqueEntity('name')]
+   
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
     #[Assert\Length(min: 2, max: 50)]
