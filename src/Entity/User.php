@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-// use Doctrine\DBAL\Types\Types;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,11 +27,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email()]
-    #[Assert\Length(min: 8, max: 180)]
+    #[Assert\Length(min: 2, max: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'json')]
-    #[Assert\NotBlank()]
+    #[ORM\Column]
+    #[Assert\NotNull()]
     private array $roles = [];
 
     private ?string $plainPassword = null;
@@ -43,24 +43,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank()]
     private ?string $password = null;
 
+   
 
-    #[ORM\Column]
-    #[Assert\NotBlank()]
-    private array $allergies = [];
+    #[ORM\Column(type: Types::TEXT)]
 
-    #[ORM\Column]
-    #[Assert\NotBlank()]
-    private array $diets = [];
+    private ?string $allergies = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $diets = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
-  
-
     public function __construct() {
         $this->createdAt = new \DateTimeImmutable();
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -117,7 +117,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
- /**
+
+    /**
      * Get the value of plainPassword
      */ 
     public function getPlainPassword()
@@ -136,7 +137,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-     
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -152,7 +152,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
 
     /**
      * @see UserInterface
@@ -165,24 +164,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
    
 
-    public function getAllergies(): array
+    public function getAllergies(): ?string
     {
         return $this->allergies;
     }
 
-    public function setAllergies(array $allergies): self
+    public function setAllergies(string $allergies): self
     {
         $this->allergies = $allergies;
 
         return $this;
     }
 
-    public function getDiets(): array
+    public function getDiets(): ?string
     {
         return $this->diets;
     }
 
-    public function setDiets(array $diets): self
+    public function setDiets(string $diets): self
     {
         $this->diets = $diets;
 
@@ -200,7 +199,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-   
 
     
 }

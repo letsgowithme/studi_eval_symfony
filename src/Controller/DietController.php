@@ -55,7 +55,7 @@ class DietController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre ingrédient a bien été créé'
+                'Votre régime a bien été créé'
             );
 
             return $this->redirectToRoute('diet.index');
@@ -67,42 +67,43 @@ return $this->render('pages/diet/new.html.twig', [
 
     /**
      * This function edits the diet
+     * @param Request $request
      * @param Diet $diet
      * @return Response
      */
 
 
 
-    #[Route('diet/edition/{id}', 'diet.edit', methods: ['GET', 'POST'])]
-    public function edit(
-
-        Diet $diet,
-        EntityManagerInterface $manager,
-        Request $request
-    ) : Response {
-
-        $form = $this->createForm(DietType::class, $diet);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $diet = $form->getData();
-
-            $manager->persist($diet);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                'Votre ingrédient a été modifié avec succès !'
-            );
-
-            return $this->redirectToRoute('diet.index');
-        }
-
-
-        return $this->render('pages/diet/edit.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
+     #[Route('diet/edition/{id}', 'diet.edit', methods: ['GET', 'POST'])]
+     public function edit(
+ 
+         Diet $diet,
+         EntityManagerInterface $manager,
+         Request $request
+     ) : Response {
+ 
+         $form = $this->createForm(DietType::class, $diet);
+         $form->handleRequest($request);
+ 
+         if ($form->isSubmitted() && $form->isValid()) {
+             $diet = $form->getData();
+ 
+             $manager->persist($diet);
+             $manager->flush();
+ 
+             $this->addFlash(
+                 'success',
+                 'Votre régime a été modifié avec succès !'
+             );
+ 
+             return $this->redirectToRoute('diet.index');
+         }
+ 
+ 
+         return $this->render('pages/diet/edit.html.twig', [
+             'form' => $form->createView()
+         ]);
+     }
     /**
      * This controller allows us to delete a diet
      *
@@ -122,7 +123,7 @@ return $this->render('pages/diet/new.html.twig', [
 
         $this->addFlash(
             'success',
-            'Votre ingrédient a été supprimé avec succès !'
+            'Votre régime a été supprimé avec succès !'
         );
 
         return $this->redirectToRoute('diet.index');

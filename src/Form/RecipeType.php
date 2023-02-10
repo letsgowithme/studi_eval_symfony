@@ -2,11 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Allergen;
 use App\Entity\Diet;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
-use App\Repository\AllergenRepository;
 use App\Repository\DietRepository;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\Mapping\OrderBy;

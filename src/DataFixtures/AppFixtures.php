@@ -12,6 +12,8 @@ use Faker\Factory;
 use Faker\Generator;
 
 
+
+
 class AppFixtures extends Fixture
 {
     /**
@@ -74,17 +76,15 @@ class AppFixtures extends Fixture
     $manager->persist($recipe);
         }
         // Users
-        $users = [];
+        
         for ($j = 0; $j < 20; $j++) {
             $user = new User();
             $user->setFullName($this->faker->name())
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password')
-                ->setAllergies($this->faker->words(3))
-                ->setDiets($this->faker->words(3));
-                
-                $users[] = $user;
+                ->setAllergies($this->faker->text(5))
+                ->setDiets($this->faker->text(5));
 
             $manager->persist($user);
         }
