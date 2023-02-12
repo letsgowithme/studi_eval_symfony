@@ -2,8 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Allergen;
 use App\Entity\Diet;
 use App\Entity\Ingredient;
+use App\Entity\Patient;
 use App\Entity\Recipe;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -40,7 +42,15 @@ class AppFixtures extends Fixture
             $manager->persist($ingredient);
 
         }
+        //Allergens
+        $allergens = [];
+        for ($n = 0; $n < 20; $n++) {
+        $allergen = new Allergen();
+        $allergen->setName($this->faker->word());
     
+        $allergens[] = $allergen;
+        $manager->persist($allergen);
+        }
 
         //Diets
         $diets = [];
@@ -68,6 +78,9 @@ class AppFixtures extends Fixture
 
             $recipe->setSteps($this->faker->text(300));
 
+            for ($b = 0; $b<mt_rand(0, 5); $b++) {
+                $recipe->addAllergen($allergens[mt_rand(0, count($allergens) - 1)]);
+            }
 
         for ($g = 0; $g<mt_rand(0, 5); $g++) {
             $recipe->addDiet($diets[mt_rand(0, count($diets) - 1)]);
@@ -77,17 +90,36 @@ class AppFixtures extends Fixture
         }
         // Users
         
-        for ($j = 0; $j < 20; $j++) {
+        for ($j = 0; $j < 10; $j++) {
             $user = new User();
             $user->setFullName($this->faker->name())
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
-                ->setPlainPassword('password')
-                ->setAllergies($this->faker->text(5))
-                ->setDiets($this->faker->text(5));
+                ->setPlainPassword('password');
 
             $manager->persist($user);
         }
+        // Patients
+        
+        for ($j = 0; $j < 10; $j++) {
+            $patient = new Patient();
+            $patient->setFullName($this->faker->name())
+                ->setEmail($this->faker->email());
+
+                for ($b = 0; $b<mt_rand(0, 5); $b++) {
+                    $recipe->addAllergen($allergens[mt_rand(0, count($allergens) - 1)]);
+                }
+    
+            for ($g = 0; $g<mt_rand(0, 5); $g++) {
+                $patient->addDiet($diets[mt_rand(0, count($diets) - 1)]);
+            }
+            for ($g = 0; $g<mt_rand(0, 5); $g++) {
+                $patient->addRecipe($recipes[mt_rand(0, count($recipes) - 1)]);
+            }
+
+            $manager->persist($patient);
+        }
+
         $manager->flush();
     }
 }

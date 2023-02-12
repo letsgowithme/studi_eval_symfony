@@ -50,6 +50,9 @@ class Recipe
     #[ORM\Column(type: Types::TEXT)]
     private ?string $steps = null;
 
+    #[ORM\ManyToMany(targetEntity: Allergen::class)]
+    private Collection $allergens;
+
 
     #[ORM\ManyToMany(targetEntity: Diet::class)]
     private Collection $diets;
@@ -57,8 +60,12 @@ class Recipe
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
+
+        $this->allergens = new ArrayCollection();
         
         $this->diets = new ArrayCollection();
+
+        
     }
 
     public function getId(): ?int
@@ -165,6 +172,31 @@ class Recipe
     }
  
      
+/**
+  * @return Collection<int, Allergen>
+  */
+   
+  public function getAllergens(): Collection
+  {
+      return $this->allergens;
+  }
+
+  public function addAllergen(Allergen $allergen): self
+  {
+      if (!$this->allergens->contains($allergen)) {
+          $this->allergens->add($allergen);
+      }
+
+      return $this;
+  }
+
+  public function removeAllergen(Allergen $allergen): self
+  {
+      $this->allergens->removeElement($allergen);
+
+      return $this;
+  }
+
  /**
   * @return Collection<int, Diet>
   */

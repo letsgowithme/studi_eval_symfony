@@ -12,7 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RecipeController extends AbstractController
-{      /**
+{    
+      /**
     * This function display all recipes
     *
     * @param RecipeRepository $repository

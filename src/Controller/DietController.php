@@ -108,7 +108,7 @@ return $this->render('pages/diet/new.html.twig', [
      * This controller allows us to delete a diet
      *
      * @param EntityManagerInterface $manager
-     * @param Diet $Diet
+     * @param Diet $diet
      * @return Response
      */
     #[Route('/diet/suppression/{id}', 'diet.delete', methods: ['GET'])]

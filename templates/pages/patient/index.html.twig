@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} La liste de patients {% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+<h1>La liste de patients</h1>
+<a href="{{ path('patient.new') }} " class="btn btn-info">Créer un patient</a>
+    {# <a href="{{ path('ingredient.new') }}  " class="btn btn-info">Créer un ingrédient</a>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {%endfor %} #}
+    <table class="table table-hover">
+<thead>
+<tr>
+<th scope="col">Numéro</th>
+<th scope="col">Nom</th>
+<th scope="col">Email</th>
+<th scope="col">Alegènes</th>
+<th scope="col">Régimes</th>
+<th scope="col">Recettes</th>
+<th scope="col">Edition</th>
+<th scope="col">Suppression</th>
+</tr>
+</thead>
+<tbody>
+        {% for patient in patients %}
+            <tr class="table-primary">
+                <th scope="row">{{ patient.id }}</th>
+                <td class="text-capitalize">{{ patient.fullName }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.allergens }}</td>
+                <td>{{ patient.diets }}</td>
+                <td>{{ patient.recipes }}</td>
+               
+                <td><a href="{{ path('patient.edit', {id: patient.id}) }}" class="btn btn-danger">Modifier</a></td>
+                <td><a href="{{ path('patient.delete', {id: patient.id}) }}" class="btn btn-warning">Supprimer</a>
+                </td>
+            </tr>
+            
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+
+

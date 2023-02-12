@@ -41,16 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?string $password = null;
-
-   
-
-    #[ORM\Column(type: Types::TEXT)]
-
-    private ?string $allergies = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $diets = null;
+    private ?string $password = 'password';
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -162,32 +153,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-   
-
-    public function getAllergies(): ?string
-    {
-        return $this->allergies;
-    }
-
-    public function setAllergies(string $allergies): self
-    {
-        $this->allergies = $allergies;
-
-        return $this;
-    }
-
-    public function getDiets(): ?string
-    {
-        return $this->diets;
-    }
-
-    public function setDiets(string $diets): self
-    {
-        $this->diets = $diets;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -199,6 +164,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    public function __toString() {
+        return $this->fullName;
+        }
     
 }
