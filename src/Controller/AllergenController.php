@@ -24,9 +24,9 @@ class AllergenController extends AbstractController
     #[Route('/allergen', name: 'allergen.index', methods: ['GET'])]
     public function index(AllergenRepository $repository): Response
     {
-        $allergen = $repository->findAll();
+        $allergens = $repository->findAll();
         return $this->render('pages/allergen/index.html.twig', [
-            'allergens' =>  $allergen
+            'allergens' =>  $allergens
         ]);
     }
 

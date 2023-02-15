@@ -55,15 +55,22 @@
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group mt-4 fs-6">
     {{ form_label(form.ingredients) }}
     {{ form_widget(form.ingredients) }}
     <div class="form-error">
         {{ form_errors(form.ingredients) }}
     </div>
 </div>
+<div class="form-group mt-4">
+    {{ form_label(form.allergens) }}
+    {{ form_widget(form.allergens) }}
+    <div class="form-error">
+        {{ form_errors(form.allergens) }}
+    </div>
+</div>
 
-<div class="form-group">
+<div class="form-group mt-4">
     {{ form_label(form.diets) }}
     {{ form_widget(form.diets) }}
     <div class="form-error">

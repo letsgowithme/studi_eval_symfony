@@ -19,9 +19,11 @@ class Patient
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
     private ?string $fullName = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
     private ?string $email = null;
 
     #[ORM\ManyToMany(targetEntity: Allergen::class)]
@@ -31,6 +33,7 @@ class Patient
     private Collection $diets;
 
     #[ORM\ManyToMany(targetEntity: Recipe::class)]
+    #[Assert\NotBlank()]
     private Collection $recipes;
 
     #[ORM\Column]
@@ -160,7 +163,10 @@ class Patient
 
         return $this;
     }
+    // public function __toString() {
+    //     return $this->fullName;
+    //     }
     public function __toString() {
-        return $this->fullName;
+        return (string) $this->getFullName();
         }
 }

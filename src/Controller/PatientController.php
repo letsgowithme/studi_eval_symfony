@@ -12,10 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PatientController extends AbstractController
-{
-  
-       /**
-    * This function display all patients
+{    
+      /**
+    * This function display all Patients
     *
     * @param PatientRepository $repository
     * @param Request $request
@@ -34,7 +33,7 @@ class PatientController extends AbstractController
 
     /*********************************************************************** */
     /**
-     * This function creates a recipe
+     * This function creates a patient
      * @param Request $request
      * @param EntityManagerInterface $manager
      * @return Response
@@ -85,7 +84,7 @@ return $this->render('pages/patient/new.html.twig', [
     ) : Response {
 
         $form = $this->createForm(PatientType::class, $patient);
-        $form->handleRequest($patient);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $patient = $form->getData();

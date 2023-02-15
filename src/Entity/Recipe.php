@@ -7,10 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
-#[UniqueEntity('name')]
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
 {
@@ -19,29 +16,19 @@ class Recipe
     #[ORM\Column]
     private ?int $id = null;
 
-    
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank()]
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\Positive()]
-    #[Assert\LessThan(1441)]
     private ?int $preparationTime = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Positive()]
-    #[Assert\LessThan(1441)]
     private ?int $pauseTime = null;
 
     #[ORM\Column]
-    #[Assert\Positive()]
-    #[Assert\LessThan(1441)]
     private ?int $cookingTime = null;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class)]
@@ -53,19 +40,14 @@ class Recipe
     #[ORM\ManyToMany(targetEntity: Allergen::class)]
     private Collection $allergens;
 
-
     #[ORM\ManyToMany(targetEntity: Diet::class)]
     private Collection $diets;
 
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
-
         $this->allergens = new ArrayCollection();
-        
         $this->diets = new ArrayCollection();
-
-        
     }
 
     public function getId(): ?int
@@ -136,8 +118,6 @@ class Recipe
     /**
      * @return Collection<int, Ingredient>
      */
-      
-    
     public function getIngredients(): Collection
     {
         return $this->ingredients;
@@ -159,48 +139,33 @@ class Recipe
         return $this;
     }
 
-    public function getSteps(): string
+    /**
+     * @return Collection<int, Allergen>
+     */
+    public function getAllergens(): Collection
     {
-        return $this->steps;
+        return $this->allergens;
     }
 
-    public function setSteps(string $steps): self
+    public function addAllergen(Allergen $allergen): self
     {
-        $this->steps = $steps;
+        if (!$this->allergens->contains($allergen)) {
+            $this->allergens->add($allergen);
+        }
 
         return $this;
     }
- 
-     
-/**
-  * @return Collection<int, Allergen>
-  */
-   
-  public function getAllergens(): Collection
-  {
-      return $this->allergens;
-  }
 
-  public function addAllergen(Allergen $allergen): self
-  {
-      if (!$this->allergens->contains($allergen)) {
-          $this->allergens->add($allergen);
-      }
+    public function removeAllergen(Allergen $allergen): self
+    {
+        $this->allergens->removeElement($allergen);
 
-      return $this;
-  }
+        return $this;
+    }
 
-  public function removeAllergen(Allergen $allergen): self
-  {
-      $this->allergens->removeElement($allergen);
-
-      return $this;
-  }
-
- /**
-  * @return Collection<int, Diet>
-  */
-   
+    /**
+     * @return Collection<int, Diet>
+     */
     public function getDiets(): Collection
     {
         return $this->diets;
@@ -221,8 +186,29 @@ class Recipe
 
         return $this;
     }
+   
+
+    /**
+     * Get the value of steps
+     */ 
+    public function getSteps()
+    {
+        return $this->steps;
+    }
+
+    /**
+     * Set the value of steps
+     *
+     * @return  self
+     */ 
+    public function setSteps($steps)
+    {
+        $this->steps = $steps;
+
+        return $this;
+    }
     public function __toString() {
         return $this->name;
         }
-        
+    
 }
